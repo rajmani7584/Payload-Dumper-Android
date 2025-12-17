@@ -31,7 +31,7 @@ object PayloadDumper {
             val partitions = payloadData[1].split(",").map { partition ->
                 val parts = partition.split("|")
                 if (largest.length < parts[0].length) largest = parts[0]
-                Partition(parts[0], parts[1].toFloatOrNull()?.div(1000) ?: 0f, parts[2])
+                Partition(parts[0], parts[1].toLongOrNull() ?: 0L, parts[2])
             }
             val incremental = payloadData[2] == "true"
             if (partitions.isEmpty()) return Result.failure(Error("Error: No Partition Found"))
@@ -75,4 +75,4 @@ class OnRustCallback(private val onProgress: (Long) -> Unit, private val onVerif
     }
 }
 data class Payload(val path: String, val name: String, val version: String, val patch: String, val partitions: List<Partition>, val incremental: Boolean, val largest: String)
-data class Partition(val name: String, val size: Float, val hash: String)
+data class Partition(val name: String, val size: Long, val hash: String)

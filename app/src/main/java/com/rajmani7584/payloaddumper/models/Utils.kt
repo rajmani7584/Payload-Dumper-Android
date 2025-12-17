@@ -65,12 +65,14 @@ object Utils {
         }
     }
 
-    fun parseSize(size: Float): String {
-        return when (size) {
-            in 0f..1000f -> "%.2f KB".format(size)
-            in 1000f..1000000f -> "%.2f MB".format(size / 1000f)
-            in 1000000f..1000000000f -> "%.2f GB".format(size / 1000000f)
-            else -> "$size KB"
-        }
-    }
+    fun parseSize(bytes: Long): String = when {
+         bytes < 1024 ->
+          "$bytes B"
+         bytes < 1024L * 1024 ->
+          "%.2f KB".format(bytes / 1024.0)
+         bytes < 1024L * 1024 * 1024 ->
+          "%.2f MB".format(bytes / (1024.0 * 1024))
+    else ->
+          "%.2f GB".format(bytes / (1024.0 * 1024 * 1024))
+   }
 }
