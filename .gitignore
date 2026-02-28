@@ -17,3 +17,5 @@
 .cxx
 local.properties
 .idea/deviceManager.xml
+lib/payload-dumper-android-rust/target/
+
