@@ -1,0 +1,64 @@
+
+package part_manifest;
+option java_package = "com.rajmani7584.payloaddumper.engine.part_manifest";
+
+message PartManifest {
+    repeated UpdateInfo partitions = 2;
+    optional uint32 block_size = 3;
+}
+
+message UpdateInfo {
+    required string partition_name = 1;
+    optional PartInfo new_partition_info = 2;
+    repeated Operation operations = 3;
+    required bool incremental = 4;
+}
+
+message PartInfo {
+    optional uint64 size = 1;
+    optional bytes hash = 2;
+}
+
+message Operation {
+    optional uint64 data_offset = 1;
+    optional uint64 data_length = 2;
+    required string sha_hash = 3;
+
+    enum Type {
+        REPLACE = 0;     // Replace destination extents w/ attached data.
+        REPLACE_BZ = 1;  // Replace destination extents w/ attached bzipped data.
+        MOVE = 2 [deprecated = true];    // Move source extents to target extents.
+        BSDIFF = 3 [deprecated = true];  // The data is a bsdiff binary diff.
+
+        // On minor version 2 or newer, these operations are supported:
+        SOURCE_COPY = 4;    // Copy from source to target partition
+        SOURCE_BSDIFF = 5;  // Like BSDIFF, but read from source partition
+
+        // On minor version 3 or newer and on major version 2 or newer, these
+        // operations are supported:
+        REPLACE_XZ = 8;  // Replace destination extents w/ attached xz data.
+
+        // On minor version 4 or newer, these operations are supported:
+        ZERO = 6;     // Write zeros in the destination.
+        DISCARD = 7;  // Discard the destination blocks, reading as undefined.
+        BROTLI_BSDIFF = 10;  // Like SOURCE_BSDIFF, but compressed with brotli.
+
+        // On minor version 5 or newer, these operations are supported:
+        PUFFDIFF = 9;  // The data is in puffdiff format.
+
+        // On minor version 8 or newer, these operations are supported:
+        ZUCCHINI = 11;
+
+        // On minor version 9 or newer, these operations are supported:
+        LZ4DIFF_BSDIFF = 12;
+        LZ4DIFF_PUFFDIFF = 13;
+
+        // On minor version 10 or newer, these operations are supported:
+        REPLACE_ZSTD = 14;
+    }
+    required Type type = 4;
+    repeated DstExtent dst_extents = 5;
+}
+message DstExtent {
+    optional uint64 num_blocks = 1;
+}

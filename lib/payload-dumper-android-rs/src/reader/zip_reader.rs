@@ -3,15 +3,15 @@ use std::io::{Read, Seek, SeekFrom};
 use crate::{
     helper::errors::{AppError, AppResult},
     read_le,
-    reader::{PayloadReader as _, Reader},
+    reader::{PayloadReader, Reader},
 };
 
 pub(crate) struct ZipReader<'a> {
-    inner: &'a mut Reader,
+    inner: &'a mut PayloadReader,
 }
 
 impl<'a> ZipReader<'a> {
-    pub(crate) fn new(inner: &'a mut Reader) -> Self {
+    pub(crate) fn new(inner: &'a mut PayloadReader) -> Self {
         Self { inner }
     }
 
