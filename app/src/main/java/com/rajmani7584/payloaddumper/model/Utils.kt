@@ -22,7 +22,7 @@ object Utils {
         }
     }
 
-    fun requestPermission(activity: Activity, viewModel: DataModel) {
+    fun requestPermission(activity: Activity) {
         LogManager.log("Requesting file permission")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
@@ -63,7 +63,7 @@ object Utils {
         val partition =
             File(outDir, "${partitionName}${if (counter == 0) "" else "(${counter})"}.img")
         return if (!partition.exists()) {
-            "${outputDirectory}/${partition.name.removeSuffix(".img")}"
+            "${outputDirectory}/${partition.name}"
         } else {
             setupPartitionName(outputDirectory, partitionName, counter + 1)
         }

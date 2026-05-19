@@ -11,20 +11,6 @@ package com.rajmani7584.payloaddumper.engine.chromeos_update_engine;
 public inline fun signatures(block: com.rajmani7584.payloaddumper.engine.chromeos_update_engine.SignaturesKt.Dsl.() -> kotlin.Unit): com.rajmani7584.payloaddumper.engine.chromeos_update_engine.UpdateMetadata.Signatures =
   com.rajmani7584.payloaddumper.engine.chromeos_update_engine.SignaturesKt.Dsl._create(com.rajmani7584.payloaddumper.engine.chromeos_update_engine.UpdateMetadata.Signatures.newBuilder()).apply { block() }._build()
 /**
- * ```
- * Signatures: Updates may be signed by the OS vendor. The client verifies
- * an update's signature by hashing the entire download. The section of the
- * download that contains the signature is at the end of the file, so when
- * signing a file, only the part up to the signature part is signed.
- * Then, the client looks inside the download's Signatures message for a
- * Signature message that it knows how to handle. Generally, a client will
- * only know how to handle one type of signature, but an update may contain
- * many signatures to support many different types of client. Then client
- * selects a Signature message and uses that, along with a known public key,
- * to verify the download. The public key is expected to be part of the
- * client.
- * ```
- *
  * Protobuf type `chromeos_update_engine.Signatures`
  */
 public object SignaturesKt {

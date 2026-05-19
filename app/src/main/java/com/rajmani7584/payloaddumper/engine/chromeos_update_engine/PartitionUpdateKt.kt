@@ -532,7 +532,6 @@ public object PartitionUpdateKt {
 
     /**
      * ```
-     * On minor version 6 or newer, these fields are supported:
      * The extent for data covered by verity hash tree.
      * ```
      *
@@ -547,7 +546,6 @@ public object PartitionUpdateKt {
       }
     /**
      * ```
-     * On minor version 6 or newer, these fields are supported:
      * The extent for data covered by verity hash tree.
      * ```
      *
@@ -558,7 +556,6 @@ public object PartitionUpdateKt {
     }
     /**
      * ```
-     * On minor version 6 or newer, these fields are supported:
      * The extent for data covered by verity hash tree.
      * ```
      *

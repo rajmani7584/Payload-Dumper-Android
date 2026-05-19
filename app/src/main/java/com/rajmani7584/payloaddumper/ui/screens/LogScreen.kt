@@ -56,12 +56,7 @@ fun LogScreen() {
                     state = scrollState,
                     modifier = Modifier.fillMaxSize().padding(12.dp)
                         .background(AppTheme.colors.onBackground, RoundedCornerShape(4.dp)),
-                    contentPadding = PaddingValues(
-                        start = 10.dp,
-                        end = 10.dp,
-                        top = 10.dp,
-                        bottom = 80.dp
-                    ),
+                    contentPadding = PaddingValues(10.dp),
                     verticalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
                     items(logs) { entry ->

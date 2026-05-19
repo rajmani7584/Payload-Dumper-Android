@@ -415,6 +415,45 @@ public object DynamicPartitionMetadataKt {
     public fun hasCompressionFactor(): kotlin.Boolean {
       return _builder.hasCompressionFactor()
     }
+
+    /**
+     * ```
+     * Whether to disable UBLK for OTA. This will force dm-user as OTA backend
+     * choice even if device was configured for UBLK based snapshots.
+     * ```
+     *
+     * `optional bool disable_ublk = 8;`
+     */
+    public var disableUblk: kotlin.Boolean
+      @kotlin.jvm.JvmName("getDisableUblk")
+        get() = _builder.disableUblk
+      @kotlin.jvm.JvmName("setDisableUblk")
+        set(value) {
+        _builder.disableUblk = value
+      }
+    /**
+     * ```
+     * Whether to disable UBLK for OTA. This will force dm-user as OTA backend
+     * choice even if device was configured for UBLK based snapshots.
+     * ```
+     *
+     * `optional bool disable_ublk = 8;`
+     */
+    public fun clearDisableUblk() {
+      _builder.clearDisableUblk()
+    }
+    /**
+     * ```
+     * Whether to disable UBLK for OTA. This will force dm-user as OTA backend
+     * choice even if device was configured for UBLK based snapshots.
+     * ```
+     *
+     * `optional bool disable_ublk = 8;`
+     * @return Whether the disableUblk field is set.
+     */
+    public fun hasDisableUblk(): kotlin.Boolean {
+      return _builder.hasDisableUblk()
+    }
   }
 }
 public inline fun com.rajmani7584.payloaddumper.engine.chromeos_update_engine.UpdateMetadata.DynamicPartitionMetadata.copy(block: `com.rajmani7584.payloaddumper.engine.chromeos_update_engine`.DynamicPartitionMetadataKt.Dsl.() -> kotlin.Unit): com.rajmani7584.payloaddumper.engine.chromeos_update_engine.UpdateMetadata.DynamicPartitionMetadata =

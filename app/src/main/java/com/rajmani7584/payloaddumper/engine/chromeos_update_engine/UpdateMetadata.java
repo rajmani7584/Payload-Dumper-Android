@@ -38,21 +38,6 @@ public final class UpdateMetadata {
     long getNumBlocks();
   }
   /**
-   * <pre>
-   * Data is packed into blocks on disk, always starting from the beginning
-   * of the block. If a file's data is too large for one block, it overflows
-   * into another block, which may or may not be the following block on the
-   * physical partition. An ordered list of extents is another
-   * representation of an ordered list of blocks. For example, a file stored
-   * in blocks 9, 10, 11, 2, 18, 12 (in that order) would be stored in
-   * extents { {9, 3}, {2, 1}, {18, 1}, {12, 1} } (in that order).
-   * In general, files are stored sequentially on disk, so it's more efficient
-   * to use extents to encode the block lists (this is effectively
-   * run-length encoding).
-   * A sentinel value (kuint64max) as the start block denotes a sparse-hole
-   * in a file whose block-length is specified by num_blocks.
-   * </pre>
-   *
    * Protobuf type {@code chromeos_update_engine.Extent}
    */
   public  static final class Extent extends
@@ -215,21 +200,6 @@ public final class UpdateMetadata {
     }
 
     /**
-     * <pre>
-     * Data is packed into blocks on disk, always starting from the beginning
-     * of the block. If a file's data is too large for one block, it overflows
-     * into another block, which may or may not be the following block on the
-     * physical partition. An ordered list of extents is another
-     * representation of an ordered list of blocks. For example, a file stored
-     * in blocks 9, 10, 11, 2, 18, 12 (in that order) would be stored in
-     * extents { {9, 3}, {2, 1}, {18, 1}, {12, 1} } (in that order).
-     * In general, files are stored sequentially on disk, so it's more efficient
-     * to use extents to encode the block lists (this is effectively
-     * run-length encoding).
-     * A sentinel value (kuint64max) as the start block denotes a sparse-hole
-     * in a file whose block-length is specified by num_blocks.
-     * </pre>
-     *
      * Protobuf type {@code chromeos_update_engine.Extent}
      */
     public static final class Builder extends
@@ -411,20 +381,6 @@ public final class UpdateMetadata {
     int getSignaturesCount();
   }
   /**
-   * <pre>
-   * Signatures: Updates may be signed by the OS vendor. The client verifies
-   * an update's signature by hashing the entire download. The section of the
-   * download that contains the signature is at the end of the file, so when
-   * signing a file, only the part up to the signature part is signed.
-   * Then, the client looks inside the download's Signatures message for a
-   * Signature message that it knows how to handle. Generally, a client will
-   * only know how to handle one type of signature, but an update may contain
-   * many signatures to support many different types of client. Then client
-   * selects a Signature message and uses that, along with a known public key,
-   * to verify the download. The public key is expected to be part of the
-   * client.
-   * </pre>
-   *
    * Protobuf type {@code chromeos_update_engine.Signatures}
    */
   public  static final class Signatures extends
@@ -442,14 +398,14 @@ public final class UpdateMetadata {
       /**
        * <code>optional uint32 version = 1 [deprecated = true];</code>
        * @deprecated chromeos_update_engine.Signatures.Signature.version is deprecated.
-       *     See update_metadata.proto;l=118
+       *     See update_metadata.proto;l=130
        * @return Whether the version field is set.
        */
       @java.lang.Deprecated boolean hasVersion();
       /**
        * <code>optional uint32 version = 1 [deprecated = true];</code>
        * @deprecated chromeos_update_engine.Signatures.Signature.version is deprecated.
-       *     See update_metadata.proto;l=118
+       *     See update_metadata.proto;l=130
        * @return The version.
        */
       @java.lang.Deprecated int getVersion();
@@ -513,7 +469,7 @@ public final class UpdateMetadata {
       /**
        * <code>optional uint32 version = 1 [deprecated = true];</code>
        * @deprecated chromeos_update_engine.Signatures.Signature.version is deprecated.
-       *     See update_metadata.proto;l=118
+       *     See update_metadata.proto;l=130
        * @return Whether the version field is set.
        */
       @java.lang.Override
@@ -523,7 +479,7 @@ public final class UpdateMetadata {
       /**
        * <code>optional uint32 version = 1 [deprecated = true];</code>
        * @deprecated chromeos_update_engine.Signatures.Signature.version is deprecated.
-       *     See update_metadata.proto;l=118
+       *     See update_metadata.proto;l=130
        * @return The version.
        */
       @java.lang.Override
@@ -755,7 +711,7 @@ public final class UpdateMetadata {
         /**
          * <code>optional uint32 version = 1 [deprecated = true];</code>
          * @deprecated chromeos_update_engine.Signatures.Signature.version is deprecated.
-         *     See update_metadata.proto;l=118
+         *     See update_metadata.proto;l=130
          * @return Whether the version field is set.
          */
         @java.lang.Override
@@ -765,7 +721,7 @@ public final class UpdateMetadata {
         /**
          * <code>optional uint32 version = 1 [deprecated = true];</code>
          * @deprecated chromeos_update_engine.Signatures.Signature.version is deprecated.
-         *     See update_metadata.proto;l=118
+         *     See update_metadata.proto;l=130
          * @return The version.
          */
         @java.lang.Override
@@ -775,7 +731,7 @@ public final class UpdateMetadata {
         /**
          * <code>optional uint32 version = 1 [deprecated = true];</code>
          * @deprecated chromeos_update_engine.Signatures.Signature.version is deprecated.
-         *     See update_metadata.proto;l=118
+         *     See update_metadata.proto;l=130
          * @param value The version to set.
          * @return This builder for chaining.
          */
@@ -787,7 +743,7 @@ public final class UpdateMetadata {
         /**
          * <code>optional uint32 version = 1 [deprecated = true];</code>
          * @deprecated chromeos_update_engine.Signatures.Signature.version is deprecated.
-         *     See update_metadata.proto;l=118
+         *     See update_metadata.proto;l=130
          * @return This builder for chaining.
          */
         @java.lang.Deprecated public Builder clearVersion() {
@@ -1167,20 +1123,6 @@ public final class UpdateMetadata {
     }
 
     /**
-     * <pre>
-     * Signatures: Updates may be signed by the OS vendor. The client verifies
-     * an update's signature by hashing the entire download. The section of the
-     * download that contains the signature is at the end of the file, so when
-     * signing a file, only the part up to the signature part is signed.
-     * Then, the client looks inside the download's Signatures message for a
-     * Signature message that it knows how to handle. Generally, a client will
-     * only know how to handle one type of signature, but an update may contain
-     * many signatures to support many different types of client. Then client
-     * selects a Signature message and uses that, along with a known public key,
-     * to verify the download. The public key is expected to be part of the
-     * client.
-     * </pre>
-     *
      * Protobuf type {@code chromeos_update_engine.Signatures}
      */
     public static final class Builder extends
@@ -2051,6 +1993,14 @@ public final class UpdateMetadata {
        * <code>LZ4DIFF_PUFFDIFF = 13;</code>
        */
       LZ4DIFF_PUFFDIFF(13),
+      /**
+       * <pre>
+       * On minor version 10 or newer, these operations are supported:
+       * </pre>
+       *
+       * <code>REPLACE_ZSTD = 14;</code>
+       */
+      REPLACE_ZSTD(14),
       ;
 
       /**
@@ -2162,6 +2112,14 @@ public final class UpdateMetadata {
        * <code>LZ4DIFF_PUFFDIFF = 13;</code>
        */
       public static final int LZ4DIFF_PUFFDIFF_VALUE = 13;
+      /**
+       * <pre>
+       * On minor version 10 or newer, these operations are supported:
+       * </pre>
+       *
+       * <code>REPLACE_ZSTD = 14;</code>
+       */
+      public static final int REPLACE_ZSTD_VALUE = 14;
 
 
       @java.lang.Override
@@ -2195,6 +2153,7 @@ public final class UpdateMetadata {
           case 11: return ZUCCHINI;
           case 12: return LZ4DIFF_BSDIFF;
           case 13: return LZ4DIFF_PUFFDIFF;
+          case 14: return REPLACE_ZSTD;
           default: return null;
         }
       }
@@ -4761,7 +4720,6 @@ public final class UpdateMetadata {
 
     /**
      * <pre>
-     * On minor version 6 or newer, these fields are supported:
      * The extent for data covered by verity hash tree.
      * </pre>
      *
@@ -4771,7 +4729,6 @@ public final class UpdateMetadata {
     boolean hasHashTreeDataExtent();
     /**
      * <pre>
-     * On minor version 6 or newer, these fields are supported:
      * The extent for data covered by verity hash tree.
      * </pre>
      *
@@ -5868,7 +5825,6 @@ public final class UpdateMetadata {
     private com.rajmani7584.payloaddumper.engine.chromeos_update_engine.UpdateMetadata.Extent hashTreeDataExtent_;
     /**
      * <pre>
-     * On minor version 6 or newer, these fields are supported:
      * The extent for data covered by verity hash tree.
      * </pre>
      *
@@ -5880,7 +5836,6 @@ public final class UpdateMetadata {
     }
     /**
      * <pre>
-     * On minor version 6 or newer, these fields are supported:
      * The extent for data covered by verity hash tree.
      * </pre>
      *
@@ -5892,7 +5847,6 @@ public final class UpdateMetadata {
     }
     /**
      * <pre>
-     * On minor version 6 or newer, these fields are supported:
      * The extent for data covered by verity hash tree.
      * </pre>
      *
@@ -5906,7 +5860,6 @@ public final class UpdateMetadata {
     }
     /**
      * <pre>
-     * On minor version 6 or newer, these fields are supported:
      * The extent for data covered by verity hash tree.
      * </pre>
      *
@@ -5926,7 +5879,6 @@ public final class UpdateMetadata {
     }
     /**
      * <pre>
-     * On minor version 6 or newer, these fields are supported:
      * The extent for data covered by verity hash tree.
      * </pre>
      *
@@ -7645,7 +7597,6 @@ public final class UpdateMetadata {
 
       /**
        * <pre>
-       * On minor version 6 or newer, these fields are supported:
        * The extent for data covered by verity hash tree.
        * </pre>
        *
@@ -7657,7 +7608,6 @@ public final class UpdateMetadata {
       }
       /**
        * <pre>
-       * On minor version 6 or newer, these fields are supported:
        * The extent for data covered by verity hash tree.
        * </pre>
        *
@@ -7669,7 +7619,6 @@ public final class UpdateMetadata {
       }
       /**
        * <pre>
-       * On minor version 6 or newer, these fields are supported:
        * The extent for data covered by verity hash tree.
        * </pre>
        *
@@ -7682,7 +7631,6 @@ public final class UpdateMetadata {
         }
       /**
        * <pre>
-       * On minor version 6 or newer, these fields are supported:
        * The extent for data covered by verity hash tree.
        * </pre>
        *
@@ -7696,7 +7644,6 @@ public final class UpdateMetadata {
       }
       /**
        * <pre>
-       * On minor version 6 or newer, these fields are supported:
        * The extent for data covered by verity hash tree.
        * </pre>
        *
@@ -7709,7 +7656,6 @@ public final class UpdateMetadata {
       }
       /**
        * <pre>
-       * On minor version 6 or newer, these fields are supported:
        * The extent for data covered by verity hash tree.
        * </pre>
        *
@@ -9958,6 +9904,27 @@ public final class UpdateMetadata {
      * @return The compressionFactor.
      */
     long getCompressionFactor();
+
+    /**
+     * <pre>
+     * Whether to disable UBLK for OTA. This will force dm-user as OTA backend
+     * choice even if device was configured for UBLK based snapshots.
+     * </pre>
+     *
+     * <code>optional bool disable_ublk = 8;</code>
+     * @return Whether the disableUblk field is set.
+     */
+    boolean hasDisableUblk();
+    /**
+     * <pre>
+     * Whether to disable UBLK for OTA. This will force dm-user as OTA backend
+     * choice even if device was configured for UBLK based snapshots.
+     * </pre>
+     *
+     * <code>optional bool disable_ublk = 8;</code>
+     * @return The disableUblk.
+     */
+    boolean getDisableUblk();
   }
   /**
    * <pre>
@@ -10561,6 +10528,60 @@ public final class UpdateMetadata {
     private void clearCompressionFactor() {
       bitField0_ = (bitField0_ & ~0x00000020);
       compressionFactor_ = 0L;
+    }
+
+    public static final int DISABLE_UBLK_FIELD_NUMBER = 8;
+    private boolean disableUblk_;
+    /**
+     * <pre>
+     * Whether to disable UBLK for OTA. This will force dm-user as OTA backend
+     * choice even if device was configured for UBLK based snapshots.
+     * </pre>
+     *
+     * <code>optional bool disable_ublk = 8;</code>
+     * @return Whether the disableUblk field is set.
+     */
+    @java.lang.Override
+    public boolean hasDisableUblk() {
+      return ((bitField0_ & 0x00000040) != 0);
+    }
+    /**
+     * <pre>
+     * Whether to disable UBLK for OTA. This will force dm-user as OTA backend
+     * choice even if device was configured for UBLK based snapshots.
+     * </pre>
+     *
+     * <code>optional bool disable_ublk = 8;</code>
+     * @return The disableUblk.
+     */
+    @java.lang.Override
+    public boolean getDisableUblk() {
+      return disableUblk_;
+    }
+    /**
+     * <pre>
+     * Whether to disable UBLK for OTA. This will force dm-user as OTA backend
+     * choice even if device was configured for UBLK based snapshots.
+     * </pre>
+     *
+     * <code>optional bool disable_ublk = 8;</code>
+     * @param value The disableUblk to set.
+     */
+    private void setDisableUblk(boolean value) {
+      bitField0_ |= 0x00000040;
+      disableUblk_ = value;
+    }
+    /**
+     * <pre>
+     * Whether to disable UBLK for OTA. This will force dm-user as OTA backend
+     * choice even if device was configured for UBLK based snapshots.
+     * </pre>
+     *
+     * <code>optional bool disable_ublk = 8;</code>
+     */
+    private void clearDisableUblk() {
+      bitField0_ = (bitField0_ & ~0x00000040);
+      disableUblk_ = false;
     }
 
     public static com.rajmani7584.payloaddumper.engine.chromeos_update_engine.UpdateMetadata.DynamicPartitionMetadata parseFrom(
@@ -11278,6 +11299,62 @@ public final class UpdateMetadata {
         return this;
       }
 
+      /**
+       * <pre>
+       * Whether to disable UBLK for OTA. This will force dm-user as OTA backend
+       * choice even if device was configured for UBLK based snapshots.
+       * </pre>
+       *
+       * <code>optional bool disable_ublk = 8;</code>
+       * @return Whether the disableUblk field is set.
+       */
+      @java.lang.Override
+      public boolean hasDisableUblk() {
+        return instance.hasDisableUblk();
+      }
+      /**
+       * <pre>
+       * Whether to disable UBLK for OTA. This will force dm-user as OTA backend
+       * choice even if device was configured for UBLK based snapshots.
+       * </pre>
+       *
+       * <code>optional bool disable_ublk = 8;</code>
+       * @return The disableUblk.
+       */
+      @java.lang.Override
+      public boolean getDisableUblk() {
+        return instance.getDisableUblk();
+      }
+      /**
+       * <pre>
+       * Whether to disable UBLK for OTA. This will force dm-user as OTA backend
+       * choice even if device was configured for UBLK based snapshots.
+       * </pre>
+       *
+       * <code>optional bool disable_ublk = 8;</code>
+       * @param value The disableUblk to set.
+       * @return This builder for chaining.
+       */
+      public Builder setDisableUblk(boolean value) {
+        copyOnWrite();
+        instance.setDisableUblk(value);
+        return this;
+      }
+      /**
+       * <pre>
+       * Whether to disable UBLK for OTA. This will force dm-user as OTA backend
+       * choice even if device was configured for UBLK based snapshots.
+       * </pre>
+       *
+       * <code>optional bool disable_ublk = 8;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearDisableUblk() {
+        copyOnWrite();
+        instance.clearDisableUblk();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:chromeos_update_engine.DynamicPartitionMetadata)
     }
     private byte memoizedIsInitialized = 2;
@@ -11304,11 +11381,12 @@ public final class UpdateMetadata {
               "cowVersion_",
               "vabcFeatureSet_",
               "compressionFactor_",
+              "disableUblk_",
             };
             java.lang.String info =
-                "\u0001\u0007\u0000\u0001\u0001\u0007\u0007\u0000\u0001\u0001\u0001\u041b\u0002\u1007" +
-                "\u0000\u0003\u1007\u0001\u0004\u1008\u0002\u0005\u100b\u0003\u0006\u1009\u0004\u0007" +
-                "\u1003\u0005";
+                "\u0001\b\u0000\u0001\u0001\b\b\u0000\u0001\u0001\u0001\u041b\u0002\u1007\u0000\u0003" +
+                "\u1007\u0001\u0004\u1008\u0002\u0005\u100b\u0003\u0006\u1009\u0004\u0007\u1003\u0005" +
+                "\b\u1007\u0006";
             return newMessageInfo(DEFAULT_INSTANCE, info, objects);
         }
         case GET_DEFAULT_INSTANCE: {

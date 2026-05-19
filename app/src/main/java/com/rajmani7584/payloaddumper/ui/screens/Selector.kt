@@ -61,7 +61,7 @@ import java.io.File
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Selector(appNavController: NavHostController, homeNavController: NavHostController) {
+fun Selector(appNavController: NavHostController) {
     val mainModel: DataModel = viewModel(LocalActivity.current as MainActivity)
     val dataModel: ExplorerModel = viewModel()
     val currentPath by dataModel.lastDirectory
@@ -170,8 +170,8 @@ fun Selector(appNavController: NavHostController, homeNavController: NavHostCont
                 }
             }
             LazyColumn(
-                contentPadding = PaddingValues(start = 6.dp, bottom = 25.dp),
-                verticalArrangement = Arrangement.spacedBy(2.dp),
+                contentPadding = PaddingValues(8.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
                 modifier = Modifier
                     .fillMaxSize()
                     .background(
@@ -213,16 +213,8 @@ fun Selector(appNavController: NavHostController, homeNavController: NavHostCont
                         } else {
                             if (!isDir) {
                                 Box(fileModifier.clickable(true, onClick = {
-//                                    try {
-//                                        val data = PayloadDumper.init(0, "$currentPath/${file.name}")
-//                                        val manifest = UpdateMetadata.DeltaArchiveManifest.parseFrom(data)
-//                                        LogManager.log(manifest.securityPatchLevel.toString())
-//                                    } catch (e: Exception) {
-//                                        LogManager.error(e.message ?: "unknown")
-//                                    }
                                     mainModel.init(
-                                        PayloadType.LocalPayload("$currentPath/${file.name}"),
-                                        homeNavController
+                                        PayloadType.LocalPayload("$currentPath/${file.name}")
                                     )
                                     appNavController.popBackStack()
                                 })) {

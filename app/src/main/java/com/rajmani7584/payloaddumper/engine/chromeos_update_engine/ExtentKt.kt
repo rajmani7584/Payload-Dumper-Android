@@ -11,21 +11,6 @@ package com.rajmani7584.payloaddumper.engine.chromeos_update_engine;
 public inline fun extent(block: com.rajmani7584.payloaddumper.engine.chromeos_update_engine.ExtentKt.Dsl.() -> kotlin.Unit): com.rajmani7584.payloaddumper.engine.chromeos_update_engine.UpdateMetadata.Extent =
   com.rajmani7584.payloaddumper.engine.chromeos_update_engine.ExtentKt.Dsl._create(com.rajmani7584.payloaddumper.engine.chromeos_update_engine.UpdateMetadata.Extent.newBuilder()).apply { block() }._build()
 /**
- * ```
- * Data is packed into blocks on disk, always starting from the beginning
- * of the block. If a file's data is too large for one block, it overflows
- * into another block, which may or may not be the following block on the
- * physical partition. An ordered list of extents is another
- * representation of an ordered list of blocks. For example, a file stored
- * in blocks 9, 10, 11, 2, 18, 12 (in that order) would be stored in
- * extents { {9, 3}, {2, 1}, {18, 1}, {12, 1} } (in that order).
- * In general, files are stored sequentially on disk, so it's more efficient
- * to use extents to encode the block lists (this is effectively
- * run-length encoding).
- * A sentinel value (kuint64max) as the start block denotes a sparse-hole
- * in a file whose block-length is specified by num_blocks.
- * ```
- *
  * Protobuf type `chromeos_update_engine.Extent`
  */
 public object ExtentKt {

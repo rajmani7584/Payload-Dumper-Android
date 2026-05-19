@@ -6,23 +6,12 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import com.rajmani7584.payloaddumper.model.DataModel
 import com.rajmani7584.payloaddumper.ui.components.AppTheme
 import com.rajmani7584.payloaddumper.ui.components.components.Surface
@@ -56,16 +45,16 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun MDialog(onDismissRequest: () -> Unit, content: @Composable () -> Unit = {}) {
-    Dialog (onDismissRequest = onDismissRequest) {
-        Box(
-            Modifier.widthIn(Dp.Unspecified, 560.dp).fillMaxWidth(.9f).background(
-                Color.White,
-                RoundedCornerShape((12.dp))
-            ).padding(12.dp)
-        ) {
-            content()
-        }
-    }
-}
+//@Composable
+//fun MDialog(onDismissRequest: () -> Unit, content: @Composable () -> Unit = {}) {
+//    Dialog (onDismissRequest = onDismissRequest) {
+//        Box(
+//            Modifier.widthIn(Dp.Unspecified, 560.dp).fillMaxWidth(.9f).background(
+//                Color.White,
+//                RoundedCornerShape((12.dp))
+//            ).padding(12.dp)
+//        ) {
+//            content()
+//        }
+//    }
+//}

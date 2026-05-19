@@ -48,7 +48,7 @@ fun App() {
             type =
                 NavType.BoolType
         })) {
-            Selector(appNavController, homeNavController)
+            Selector(appNavController)
         }
     }
 }
