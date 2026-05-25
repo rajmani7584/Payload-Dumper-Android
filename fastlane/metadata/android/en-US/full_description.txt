@@ -1,0 +1,17 @@
+<h2>This release needs fresh installation</h2>
+
+<p><b>Payload dumper</b> extracts boot.img and other partition images (boot, vendor_boot, etc.) from a payload.bin or ota.zip directly on your Android device.</p>
+
+- real-time extraction progress
+- hash verification for extracted images
+- extract directly from OTA zip files
+- Debug logging - enhanced troubleshooting and debugging
+- Incremental detection - identifies incremental OTAs (extraction not supported yet!)
+- Parallel extraction - allow selecting additional images while extraction is in progress
+- Cancel extraction - option to abort an ongoing extraction process
+
+
+
+
+<b>Upcoming features:</b>
+  - option to select from/to USB storage
