@@ -37,6 +37,7 @@ import com.rajmani7584.payloaddumper.ui.screens.App
 import com.rajmani7584.payloaddumper.ui.screens.LogManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.woheller69.freeDroidWarn.FreeDroidWarn
 
 val LocalSettings = staticCompositionLocalOf<SettingModel> { error("No vm provided") }
 class MainActivity : ComponentActivity() {
@@ -61,6 +62,7 @@ class MainActivity : ComponentActivity() {
         SettingDeps.init(this)
         enableEdgeToEdge(navigationBarStyle = SystemBarStyle.light(1, 0))
 
+        FreeDroidWarn.showWarningOnUpgrade(this, BuildConfig.VERSION_CODE)
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
                 dataModel.payload.collect { state ->
@@ -107,7 +109,7 @@ class MainActivity : ComponentActivity() {
             }
             LaunchedEffect(requestCounter) {
                 delay(40)
-                dataModel.setPermission(this@MainActivity)
+                dataModel.setPermissions(this@MainActivity)
                 if (dataModel.hasPermission.value != true) LogManager.error("File Permission Denied")
             }
         }

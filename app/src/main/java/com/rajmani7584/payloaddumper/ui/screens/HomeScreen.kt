@@ -1,11 +1,15 @@
 package com.rajmani7584.payloaddumper.ui.screens
 
+import android.os.Build
 import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,15 +20,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.UploadFile
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,13 +45,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.rajmani7584.payloaddumper.LocalSettings
 import com.rajmani7584.payloaddumper.MainActivity
 import com.rajmani7584.payloaddumper.R
 import com.rajmani7584.payloaddumper.model.DataModel
 import com.rajmani7584.payloaddumper.model.PayloadState
 import com.rajmani7584.payloaddumper.model.PayloadType
 import com.rajmani7584.payloaddumper.ui.components.AppTheme
+import com.rajmani7584.payloaddumper.ui.components.LocalColors
 import com.rajmani7584.payloaddumper.ui.components.components.Button
 import com.rajmani7584.payloaddumper.ui.components.components.Scaffold
 import com.rajmani7584.payloaddumper.ui.components.components.textfield.OutlinedTextField
@@ -88,7 +93,10 @@ fun HomeScreenUI(
     homeNavController: NavHostController
 ) {
     val dataModel: DataModel = viewModel(LocalActivity.current as MainActivity)
-    val settings by LocalSettings.current.settings.collectAsState()
+    val hasNotifyPermission by dataModel.hasNotifyPermission
+//    val settings by LocalSettings.current.settings.collectAsState()
+    val activity = LocalActivity.current
+
 
     LaunchedEffect(Unit) {
         dataModel.navEvent.collect {
@@ -103,108 +111,150 @@ fun HomeScreenUI(
 
     Scaffold(
         topBar = { ScreenTopBar(title = "Payload Dumper") }) { innerPadding ->
-        Box(Modifier.padding(top = innerPadding.calculateTopPadding()).fillMaxSize()) {
-            Column(
-                Modifier.align(Alignment.Center),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+        Column(
+            Modifier.padding(top = innerPadding.calculateTopPadding()).fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Column {
                 when (payloadState) {
                     PayloadState.Loading -> LoadingIndicator()
                     else -> {
-                        Column(modifier = Modifier.padding(vertical = 16.dp, horizontal = 24.dp)) {
-                            Icon(
-                                Icons.Default.UploadFile,
-                                contentDescription = "File",
-                                Modifier.size(80.dp).align(
-                                    Alignment.CenterHorizontally
-                                )
-                            )
-                            Spacer(Modifier.height(24.dp))
-                            dataModel.hasPermission.value?.let {
-                                if (!it) {
+                        hasNotifyPermission?.let {
+                            if (!it)
+                                Column(
+                                    modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp)
+                                        .clip(RoundedCornerShape(8.dp)).background(
+                                        LocalColors.current.surface
+                                    ).border(
+                                        BorderStroke(1.dp, LocalContentColor.current),
+                                        RoundedCornerShape(8.dp)
+                                    ), horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
                                     val activity = LocalActivity.current
-                                    Button(text = stringResource(R.string.first_start_allow_file_access), onClick = {
+                                    Spacer(Modifier.height(4.dp))
+                                    Text("Enable notification permission to process payload in background")
+                                    Spacer(Modifier.height(6.dp))
+                                    Button(text = "Allow notifications", onClick = {
                                         if (activity == null) return@Button
-                                        dataModel.requestPermission(activity)
-                                    })
-                                }
-                                else
-                                    Button(text = "Select a file", onClick = {
-                                        appNavController.navigate(Screens.Selector.createRoute(false)) {
-                                            popUpTo(Screens.Home.route) {
-                                                saveState = true
-                                            }
-                                            launchSingleTop = true
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                            dataModel.requestNotifyPermission(activity)
                                         }
                                     })
-                            }
-                        }
-                        Spacer(Modifier.height(24.dp))
-
-                        Text("OR", color = AppTheme.colors.text.copy(alpha = .4f))
-                        Spacer(Modifier.height(24.dp))
-                        Column {
-                            val url by dataModel.remoteUrl
-                            OutlinedTextField(
-                                value = url, onValueChange = { dataModel.setURL(it) },
-                                singleLine = true,
-                                modifier = Modifier.widthIn(Dp.Unspecified, 540.dp)
-                                    .fillMaxWidth(.75f),
-                                placeholder = {
-                                    Text(
-                                        "https://website.com/ota.zip",
-                                        color = AppTheme.colors.text.copy(alpha = .4f)
-                                    )
+                                    Spacer(Modifier.height(4.dp))
                                 }
-                            )
-                            Button(
-                                onClick = {
-                                    dataModel.init(
-                                        PayloadType.RemotePayload(url)
-                                    )
-                                },
-                                modifier = Modifier.align(Alignment.CenterHorizontally)
-                                    .padding(vertical = 12.dp),
-                                text = "Fetch"
-                            )
                         }
-                        Spacer(Modifier.height(24.dp))
-                        if (payloadState is PayloadState.Ready) {
-                            Row(
-                                modifier = Modifier.widthIn(Dp.Unspecified, 540.dp).fillMaxWidth(.8f)
-                                    .clip(RoundedCornerShape(8.dp)).background(
-                                        AppTheme.colors.primary.copy(alpha = .1f)
-                                    ).clickable {
-                                        homeNavController.navigate(Screens.Extract.route) {
-                                            popUpTo(Screens.Home.route) {
-                                                saveState = true
-                                            }
-                                            launchSingleTop = false
-                                        }
-                                    }.padding(horizontal = 8.dp, vertical = 12.dp),
-                                verticalAlignment = Alignment.CenterVertically
+                        Column(
+                            Modifier.fillMaxSize(),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(
+                                    vertical = 16.dp,
+                                    horizontal = 24.dp
+                                )
                             ) {
-                                Text(
-                                    payloadState.name,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
-                                    modifier = Modifier.weight(1f)
-                                )
-                                Box(modifier = Modifier.size(16.dp)) {
-                                    Icon(
-                                        Icons.AutoMirrored.Default.ArrowForward,
-                                        contentDescription = null
+                                Icon(
+                                    Icons.Default.UploadFile,
+                                    contentDescription = "File",
+                                    Modifier.size(80.dp).align(
+                                        Alignment.CenterHorizontally
                                     )
+                                )
+                                Spacer(Modifier.height(24.dp))
+                                dataModel.hasPermission.value?.let {
+                                    if (!it) {
+                                        Button(
+                                            text = stringResource(R.string.first_start_allow_file_access),
+                                            onClick = {
+                                                if (activity == null) return@Button
+                                                dataModel.requestPermission(activity)
+                                            })
+                                    } else
+                                        Button(text = "Select a file", onClick = {
+                                            appNavController.navigate(
+                                                Screens.Selector.createRoute(
+                                                    false
+                                                )
+                                            ) {
+                                                popUpTo(Screens.Home.route) {
+                                                    saveState = true
+                                                }
+                                                launchSingleTop = true
+                                            }
+                                        })
                                 }
                             }
-                        }
-                        if (payloadState is PayloadState.Error) {
-                            Box(Modifier.widthIn(Dp.Unspecified, 840.dp).fillMaxWidth(.75f)) {
-                                Text(
-                                    payloadState.message,
-                                    color = Color.Red,
-                                    fontFamily = FontFamily.Monospace
+                            Spacer(Modifier.height(24.dp))
+
+                            Text("OR", color = AppTheme.colors.text.copy(alpha = .4f))
+                            Spacer(Modifier.height(24.dp))
+                            Column {
+                                val url by dataModel.remoteUrl
+                                OutlinedTextField(
+                                    value = url, onValueChange = { dataModel.setURL(it) },
+                                    singleLine = true,
+                                    modifier = Modifier.widthIn(Dp.Unspecified, 540.dp)
+                                        .fillMaxWidth(.75f),
+                                    placeholder = {
+                                        Text(
+                                            "https://website.com/ota.zip",
+                                            color = AppTheme.colors.text.copy(alpha = .4f)
+                                        )
+                                    }
                                 )
+                                Button(
+                                    onClick = {
+                                        dataModel.init(
+                                            PayloadType.RemotePayload(url)
+                                        )
+                                    },
+                                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                                        .padding(vertical = 12.dp),
+                                    text = "Fetch"
+                                )
+                            }
+                            Spacer(Modifier.height(24.dp))
+                            if (payloadState is PayloadState.Ready) {
+                                Row(
+                                    modifier = Modifier.widthIn(Dp.Unspecified, 540.dp)
+                                        .fillMaxWidth(.8f)
+                                        .clip(RoundedCornerShape(8.dp)).background(
+                                            AppTheme.colors.primary.copy(alpha = .1f)
+                                        ).clickable {
+                                            homeNavController.navigate(Screens.Extract.route) {
+                                                popUpTo(Screens.Home.route) {
+                                                    saveState = true
+                                                }
+                                                launchSingleTop = false
+                                            }
+                                        }.padding(horizontal = 8.dp, vertical = 12.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        payloadState.name,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                        modifier = Modifier.weight(1f)
+                                    )
+                                    Box(modifier = Modifier.size(16.dp)) {
+                                        Icon(
+                                            Icons.AutoMirrored.Default.ArrowForward,
+                                            contentDescription = null
+                                        )
+                                    }
+                                }
+                            }
+                            if (payloadState is PayloadState.Error) {
+                                Box(
+                                    Modifier.widthIn(Dp.Unspecified, 840.dp).fillMaxWidth(.75f)
+                                ) {
+                                    Text(
+                                        payloadState.message,
+                                        color = Color.Red,
+                                        fontFamily = FontFamily.Monospace
+                                    )
+                                }
                             }
                         }
                     }

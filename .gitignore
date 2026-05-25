@@ -16,3 +16,5 @@ local.properties
 /lib/payload-dumper-android-rs/target
 /target
 lib/payload-dumper-android-rs/out
+/app/release
+/app/release/**

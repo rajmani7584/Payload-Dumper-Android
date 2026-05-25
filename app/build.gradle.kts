@@ -36,6 +36,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     packaging {
         jniLibs {
@@ -75,6 +76,8 @@ dependencies {
     implementation(libs.composables)
 
     implementation(libs.protobuf.kotlin)
+
+    implementation("com.github.woheller69:FreeDroidWarn:V1.+")
 
 //    implementation(libs.compose.markdown)
 }

@@ -47,6 +47,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.rajmani7584.payloaddumper.BuildConfig
 import com.rajmani7584.payloaddumper.LocalSettings
 import com.rajmani7584.payloaddumper.R
 import com.rajmani7584.payloaddumper.model.BufSize
@@ -310,14 +311,12 @@ fun SettingScreen() {
                         ctx.startActivity(intent)
                     }
                 ) {
-                    val version = ctx.packageManager.getPackageInfo(ctx.packageName, 0).versionName
-                        ?: "Unknown"
                     Row(
                         Modifier.padding(contentPad),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            stringResource(R.string.settings_about_version, version),
+                            stringResource(R.string.settings_about_version, BuildConfig.VERSION_NAME),
                             style = AppTheme.typography.h4
                         )
                         Spacer(Modifier.weight(1f))

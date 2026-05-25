@@ -1,4 +1,7 @@
 > **Rewrite Completed**
+
+## Please refer to this: [https://keepandroidopen.org/](https://keepandroidopen.org/)
+
 <div align="center">
 
 # Payload-Dumper-Android
@@ -12,6 +15,12 @@
 
 ### You can extract images (boot, vendor_boot...) from a payload.bin or OTA.zip **directly on Android**.
 
+## Installation
+- IzzyOnDroid
+
+  [![Get it on IzzyOnDroid](https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid2.png)](https://apt.izzysoft.de/fdroid/index/apk/com.rajmani7584.payloaddumper)
+
+- [GitHub releses](https://github.com/rajmani7584/Payload-Dumper-Android/releases)
 
 ## Screenshots
 

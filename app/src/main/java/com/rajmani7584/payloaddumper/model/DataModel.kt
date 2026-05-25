@@ -2,7 +2,9 @@ package com.rajmani7584.payloaddumper.model
 
 import android.app.Activity
 import android.app.Application
+import android.os.Build
 import android.os.Environment
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
@@ -35,6 +37,9 @@ class DataModel(application: Application): AndroidViewModel(application) {
     private val _hasPermission = mutableStateOf<Boolean?>(null)
     val hasPermission: State<Boolean?> = _hasPermission
 
+    private val _hasNotifyPermission = mutableStateOf<Boolean?>(null)
+    val hasNotifyPermission: State<Boolean?> = _hasNotifyPermission
+
     private val _url =
         mutableStateOf("")
     val remoteUrl: State<String> = _url
@@ -43,13 +48,23 @@ class DataModel(application: Application): AndroidViewModel(application) {
         _url.value = value
     }
 
-    fun setPermission(activity: MainActivity) {
+    fun setPermissions(activity: MainActivity) {
         _hasPermission.value = Utils.hasPermission(activity)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            _hasNotifyPermission.value = Utils.hasNotifyPermission(activity)
+        }
     }
 
     fun requestPermission(activity: Activity) {
         Utils.requestPermission(activity)
         _hasPermission.value = Utils.hasPermission(activity)
+    }
+
+    fun requestNotifyPermission(activity: Activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Utils.requestNotifyPermission(activity)
+            _hasNotifyPermission.value = Utils.hasNotifyPermission(activity)
+        }
     }
 
     private val _lastDirectory = MutableStateFlow(externalStorage)

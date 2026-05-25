@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.Settings
+import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import com.rajmani7584.payloaddumper.ui.screens.LogManager
 import java.io.File
@@ -20,6 +21,12 @@ object Utils {
         } else {
             activity.checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
         }
+    }
+
+    fun hasNotifyPermission(activity: Activity): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            activity.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+        } else true
     }
 
     fun requestPermission(activity: Activity) {
@@ -41,6 +48,29 @@ object Utils {
                     arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
                     1
                 )
+            }
+        }
+    }
+
+    fun requestNotifyPermission(activity: Activity) {
+        LogManager.log("Requesting notification permission")
+        if (activity.shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS)) {
+            LogManager.log("Error: can't show permission dialog! allow from setting")
+            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+            val uri = Uri.fromParts("package", activity.packageName, null)
+            intent.data = uri
+            activity.startActivity(intent)
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                activity.requestPermissions(
+                    arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),
+                    1
+                )
+            } else {
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                val uri = Uri.fromParts("package", activity.packageName, null)
+                intent.data = uri
+                activity.startActivity(intent)
             }
         }
     }
