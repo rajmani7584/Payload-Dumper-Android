@@ -23,7 +23,8 @@ impl LocalPayloadReader {
 
 impl Read for LocalPayloadReader {
     fn read(&mut self, buf: &mut [u8]) -> std::io::Result<usize> {
-        self.file.read(buf)
+        self.file.read_exact(buf)?;
+        Ok(buf.len())
     }
 }
 

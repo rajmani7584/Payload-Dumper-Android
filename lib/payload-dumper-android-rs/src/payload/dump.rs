@@ -38,18 +38,8 @@ impl PayloadDumper {
 
             let dst_extent = op.dst_extents[0];
 
-            let offset = op.data_offset.ok_or_else(|| {
-                AppError::Other(format!(
-                    "Data offset for {} not found",
-                    partition.partition_name
-                ))
-            })? + header.data_offset();
-            let data_len = op.data_length.ok_or_else(|| {
-                AppError::Other(format!(
-                    "Data length for {} not found",
-                    partition.partition_name
-                ))
-            })?;
+            let offset = op.data_offset() + header.data_offset();
+            let data_len = op.data_length();
             let exp_size = dst_extent.num_blocks.ok_or_else(|| {
                 AppError::Other(format!(
                     "Number of blocks for {} not found",
@@ -86,7 +76,8 @@ impl PayloadDumper {
                     bytes_written = std::io::copy(&mut decoder, &mut out_fd)?;
                 }
                 part_manifest::operation::Type::Zero => {
-                    bytes_written = std::io::copy(&mut std::io::repeat(0), &mut out_fd)?;
+                    let mut filler = std::io::repeat(0).take(exp_size);
+                    bytes_written = std::io::copy(&mut filler, &mut out_fd)?;
                 }
                 _ => {
                     return Err(AppError::Other(format!(
@@ -113,6 +104,9 @@ impl PayloadDumper {
             if verify {
                 let hash = sha256.finalize();
                 let hash = hex::encode(hash);
+                if op.sha_hash.is_empty() {
+                    continue;
+                }
                 if hash != op.sha_hash {
                     return Err(AppError::Other(format!(
                         "Hash mismatch: {} != {}",
