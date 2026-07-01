@@ -19,4 +19,3 @@ local.properties
 lib/payload-dumper-android-rs/out
 /app/release
 /app/release/**
-/app/src/main/jniLibs
