@@ -19,8 +19,14 @@ jobs:
           java-version: '21'
           cache: 'gradle'
 
-      - name: Build Apk
-        run: ./gradlew assembleRelease
+      - name: Build APK
+        run: ./gradlew assembleRelease --no-daemon --no-build-cache
+
+      - name: Get version from build.gradle
+        id: version
+        run: |
+          VERSION=$(grep -oP 'versionName\s*=\s*"\K[^"]+' app/build.gradle.kts | head -n 1)
+          echo "name=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Sign Android APK
         id: sign_app
@@ -31,9 +37,19 @@ jobs:
           alias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEY_PASS }}
           keyPassword: ${{ secrets.KEY_ALIAS_PASS }}
+        
+        env:
+          BUILD_TOOLS_VERSION: "37.0.0"
+
+      - name: Rename signed APK
+        id: rename
+        run: |
+          NEW_NAME="PayloadDumper-v${{ steps.version.outputs.name }}.apk"
+          cp "${{ steps.sign_app.outputs.signedReleaseFile }}" "$NEW_NAME"
+          echo "path=$NEW_NAME" >> "$GITHUB_OUTPUT"
 
       - name: Upload Signed APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: PayloadDumper-v${{ github.ref_name }}.apk
-          path: ${{ steps.sign_app.outputs.signedReleaseFile }}
+          name: PayloadDumper-v${{ steps.version.outputs.name }}
+          path: ${{ steps.rename.outputs.path }}
