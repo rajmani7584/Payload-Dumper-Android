@@ -76,7 +76,8 @@ dependencies {
 
     implementation(libs.protobuf.kotlin)
 
-    implementation("com.github.woheller69:FreeDroidWarn:V1.+")
+    implementation(libs.freedroidwarn)
+    implementation(libs.androidx.core.splashscreen)
 
 //    implementation(libs.compose.markdown)
 }
