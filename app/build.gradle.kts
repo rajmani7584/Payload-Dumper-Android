@@ -14,8 +14,8 @@ android {
         applicationId = "com.rajmani7584.payloaddumper"
         minSdk = 28
         targetSdk = 37
-        versionCode = 20260629
-        versionName = "5.1"
+        versionCode = 20260713
+        versionName = "5.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

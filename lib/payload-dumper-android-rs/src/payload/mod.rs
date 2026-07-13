@@ -60,7 +60,6 @@ impl PayloadDumper {
         let mut reader = PayloadReader::new(payload.clone(), buf_size)?;
 
         reader = reader.calculate_offset()?;
-        let http = reader.is_http();
 
         Ok(Self {
             payload,

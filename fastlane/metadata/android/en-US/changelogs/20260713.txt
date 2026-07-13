@@ -1,0 +1,3 @@
+Adaptive Icon
+Added chrome userAgent by default (for remote payload)
+fixed light splash in dark mode

@@ -34,6 +34,7 @@ impl RemotePayloadReader {
             .timeout_connect(Some(std::time::Duration::from_secs(REQUEST_TIMEOUT)))
             .timeout_recv_response(Some(std::time::Duration::from_secs(READ_TIMEOUT)))
             .timeout_recv_body(Some(std::time::Duration::from_secs(READ_TIMEOUT)))
+            .user_agent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36")
             .build()
             .new_agent();
 

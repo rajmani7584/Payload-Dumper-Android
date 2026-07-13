@@ -17,8 +17,8 @@ crate-type = ["cdylib"]
 bzip2 = "0.6.1"
 hex = "0.4.3"
 jni = "0.22.4"
-liblzma = "0.4.6"
-prost = "0.14.3"
+liblzma = "0.4.7"
+prost = "0.14.4"
 sha2 = "0.11.0"
 tokio = { version = "1.52.3", features = ["full"] }
 ureq = "3.3.0"
@@ -26,7 +26,7 @@ zstd = "0.13.3"
 
 
 [build-dependencies]
-prost-build = "0.14.3"
+prost-build = "0.14.4"
 
 [profile.release]
 lto = "fat"
