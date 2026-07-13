@@ -7,7 +7,7 @@
 # Payload Dumper
 <br/>
 
-![Launcher icon](./app/src/main/ic_launcher-playstore.png)
+![Launcher icon](./app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp)
 
 ### A powerful OTA extractor app for Android
 
