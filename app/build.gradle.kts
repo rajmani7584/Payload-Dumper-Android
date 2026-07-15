@@ -40,6 +40,7 @@ android {
     }
     packaging {
         jniLibs {
+            keepDebugSymbols.add("**/*.so")
             useLegacyPackaging = true
         }
     }
