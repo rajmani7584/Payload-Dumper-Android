@@ -1,0 +1,8 @@
+[versions]
+buildTools = "37.0.0"
+jdk = "21" # SDKMAN java - 21.0.11-ms
+ndk = "30.0.15729638"
+rustup = "1.29.0"
+rustToolchain = "1.97.0"
+
+cmdlineTools = "22.0.0"

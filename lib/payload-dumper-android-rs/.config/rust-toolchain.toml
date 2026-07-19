@@ -1,0 +1,4 @@
+[toolchain]
+channel = "1.97.1"
+
+targets = ["armv7-linux-androideabi", "aarch64-linux-android"]

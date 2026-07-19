@@ -1,0 +1,8 @@
+[versions]
+rustup = "1.29.0"
+rustToolchain = "1.97.1"
+ndk = "30.0.15729638"
+cargoNdk = "4.1.2"
+
+cmdlineTools = "20.0"
+cmdlineToolsHash = "04453066b540409d975c676d781da1477479dde3761310f1a7eb92a1dfb15af7"

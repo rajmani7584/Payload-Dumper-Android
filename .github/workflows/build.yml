@@ -3,20 +3,57 @@ name: Release Apk
 on:
   workflow_dispatch:
 
+env:
+  RUSTUP_HOME: /tmp/rustup-home
+  CARGO_HOME: /tmp/cargo-home
+  RUST_TOOLCHAIN: 1.97.1
+  NDK: 30.0.15729638
+  CARGO_NDK: 4.1.2
+
 jobs:
   build:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v7.0.0
+      - name: Checkout Self
+        uses: actions/checkout@v7.0.0
+
+      - name: Install Rust toolchain
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
+            --no-modify-path \
+            --default-toolchain ${{ env.RUST_TOOLCHAIN }} \
+            --target armv7-linux-androideabi --target aarch64-linux-android
+          echo "$CARGO_HOME/bin" >> $GITHUB_PATH
+          cargo install cargo-ndk --version ${{ env.CARGO_NDK }}
 
       - name: Set up JDK
         uses: actions/setup-java@v5.5.0
         with:
           distribution: 'microsoft'
-          java-version: '21'
+          java-version: '21.0.11'
+
+      - name: Setup Android SDK Tools
+        uses: android-actions/setup-android@v3.2.1
+        with:
+          cmdline-tools-version: 14742923
+
+      - name: Setup Android NDK
+        run: |
+          sdkmanager "ndk;${{ env.NDK }}"
+
+      - name: Setup protoc
+        uses: arduino/setup-protoc@v3.0.0
+        with:
+          version: 35.1
+
+      - name: Build library
+        run: |
+          pushd lib/payload-dumper-android-rs
+          ./build.sh
+          popd
 
       - name: Build APK
-        run: ./gradlew assembleRelease --no-daemon --no-build-cache
+        run: ./gradlew assembleRelease
 
       - name: Get version from build.gradle
         id: version
