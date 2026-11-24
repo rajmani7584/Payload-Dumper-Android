@@ -1,0 +1,64 @@
+<resources>
+
+    <string name="first_start_allow_file_access">Permitir acesso a arquivos</string>
+    <string name="file_permission_denied">Permissão de arquivo negada</string>
+    <string name="notification_perm_hint">Ative a permissão de notificação para processar o payload em segundo plano</string>
+    <string name="allow_notifications">Permitir notificações</string>
+    <string name="nav_bar_analyze">Analisar</string>
+    <string name="nav_bar_logs">Registros</string>
+    <string name="nav_bar_settings">Configurações</string>
+    <string name="nav_bar_home">Início</string>
+    <string name="home_select_file">Selecionar um arquivo</string>
+    <string name="home_fetch_remote">Baixar</string>
+    <string name="home_select_or">OU</string>
+    <string name="selector_header">Selecionar %1$s</string>
+    <string name="selector_director">diretório</string>
+    <string name="payload">payload</string>
+    <string name="extract_payload_not_init">O payload ainda não foi inicializado!</string>
+    <string name="extract_save_to">Salvar em:</string>
+    <string name="extract_parts_avail">Partições disponíveis (%d)</string>
+    <string name="extract_ops_save_all">Salvar tudo</string>
+    <string name="extract_ops_cancel_all">Cancelar tudo</string>
+    <string name="extract_ops_save">Salvar</string>
+    <string name="partition_status_progress">progresso %d%%</string>
+    <string name="partition_status_pending">pendente</string>
+    <string name="partition_status_verifying">verificando…</string>
+    <string name="partition_status_done">concluído</string>
+    <string name="partition_status_failed">falhou</string>
+    <string name="partition_details_header">Detalhes da partição:</string>
+    <string name="partition_details_name">Nome: %1$s</string>
+    <string name="partition_details_size">Tamanho: %1$s</string>
+    <string name="partition_details_download_size">Tamanho do download: %1$s</string>
+    <string name="partition_details_hash">Hash:</string>
+    <string name="partition_details_error">Ocorreu um erro:</string>
+    <string name="partition_details_hash_copied">copiado para a área de transferência!</string>
+    <string name="txt_internal_storage">Armazenamento interno</string>
+    <string name="selector_screen_invalid_path">Este diretório não existe</string>
+    <string name="selector_empty">Diretório vazio!</string>
+    <string name="selector_no_permission">Sem permissão de leitura aqui!</string>
+    <string name="settings_concurrency">Simultaneidade: %1$s</string>
+    <string name="settings_concurrency_hint">Em vigor a partir da próxima sessão</string>
+    <string name="settings_buffer_size">Tamanho do buffer</string>
+    <string name="settings_buffer_size_hint">para calcular a soma de verificação sha 
+e também para baixar do remoto</string>
+    <string name="settings_verify_hash">Verificar hash</string>
+    <string name="settings_verify_hash_hint">verifica a soma de verificação de cada partição extraída</string>
+    <string name="settings_overwrite_partitions">Sobrescrever partições</string>
+    <string name="settings_overwrite_partitions_hint">sobrescreve as partições existentes
+se desativado, as partições existentes serão renomeadas automaticamente para nome(i++)</string>
+    <string name="settings_auto_delete">Exclusão automática</string>
+    <string name="settings_auto_delete_description">Excluir o arquivo de saída em caso de falha</string>
+    <string name="settings_color_theme">Tema de cor</string>
+    <string name="settings_color_theme_info">O sistema requer Android 12+</string>
+    <string name="settings_color_theme_app">App</string>
+    <string name="settings_color_theme_system">Sistema</string>
+    <string name="settings_dark_theme">Tema escuro</string>
+    <string name="settings_dark_theme_auto">Automático</string>
+    <string name="settings_dark_theme_light">Claro</string>
+    <string name="settings_dark_theme_dark">Escuro</string>
+    <string name="settings_about_version">Versão: %1$s</string>
+    <string name="settings_about_version_desc">Verificar atualizações</string>
+    <string name="settings_about_source_code">Código-fonte</string>
+    <string name="settings_about_author">Autor</string>
+    <string name="settings_about_author_name">Rajmani Kumar</string>
+</resources>
