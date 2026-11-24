@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name" translatable="false">Payload Dumper</string>
+
   <string name="first_start_allow_file_access">Zezwól na dostęp do plików</string>
   <string name="file_permission_denied">Odmowa dostępu do plików</string>
   <string name="notification_perm_hint">Włącz uprawnienia powiadomień dotyczące przetwarzania payload w tle</string>

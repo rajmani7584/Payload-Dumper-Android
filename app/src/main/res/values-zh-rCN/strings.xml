@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Translated using LLM -->
 <resources>
-    <string name="app_name" translatable="false">Payload Dumper</string>
+
     <string name="first_start_allow_file_access">允许访问文件</string>
     <string name="file_permission_denied">文件权限已被拒绝</string>
     <string name="notification_perm_hint">启用通知权限以在后台处理 payload</string>
